@@ -12,9 +12,9 @@ var Countador = (function(){
     
     var intNumber = 0;
     var intervalAmount = 0;
-    var intervalTime = undefined;
     var timer = undefined;
     var minInterval = 250;
+    var intervalTime = 0;
     var rateTime = 3600000; // Millis on a hour
     var numIntervals = rateTime / minInterval;
 
@@ -76,7 +76,7 @@ var Countador = (function(){
     function pollData( callback ) {
 
         // Local filesystem test
-        callback( 953267, 34000 );
+        callback( 953267, 10000 );
 
         /*
         $.ajax({
@@ -168,7 +168,13 @@ var Countador = (function(){
 
     function renderNumber( i ) {
 
-                $numbers[i].html( data[i] );
+        var $clone = $numbers[i].clone();
+        $clone.addClass('dissapearingNumber');
+        $numbers[i].html( data[i] );
+        $numbers[i].append($clone);
+        $clone.fadeOut( Math.min(intervalTime / 2, 500) , function(){
+            $(this).remove();
+        });
 
     };
 
