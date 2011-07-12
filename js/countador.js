@@ -11,8 +11,14 @@ var Countador = (function(){
     var $box = undefined;
     
     var intNumber = 0;
-    var rate = 0;
+    var intervalAmount = 0;
+    var intervalTime = undefined;
+    var timer = undefined;
+    var minInterval = 250;
+    var rateTime = 3600000; // Millis on a hour
+    var numIntervals = rateTime / minInterval;
 
+    var oldData = '';
     var data = '';
     var $numbers = [];
 
@@ -62,14 +68,15 @@ var Countador = (function(){
                 $numbers[i] = $( $numbers[i] );
             }
 
-            updateCounter(number, rate);
+            updateCounter( number );
+            updateRate( rate );
         });
     };
 
     function pollData( callback ) {
 
         // Local filesystem test
-        callback( 53267, 600 );
+        callback( 953267, 34000 );
 
         /*
         $.ajax({
@@ -102,10 +109,11 @@ var Countador = (function(){
 
     };
 
-    function updateCounter( number, rate ) {
+    function updateCounter( number ) {
 
         intNumber = number;
-        data = intNumber + '';
+        oldData = data;
+        data = Math.floor(intNumber) + '';
         
         if( data.length > options.digits ) {
             log( 'Countador: The number received is bigger than the digits specified. We will break it' );
@@ -123,17 +131,52 @@ var Countador = (function(){
 
         renderCounter();
 
-        // TODO:
+    };
+
+    function updateRate( rate ) {
+
         // Adapt the rate
         // Delete interval and create a new one
+        if( timer !== undefined )
+            clearTimeout( timer );
+
+        // TODO: Right now we update when a unit has to be added. For fast
+        // growing counters this is not good. A smarter implementation is
+        // needed
+
+        intervalAmount = rate / numIntervals;
+
+        if( intervalAmount < 1 ) {
+            intervalAmount = 1;
+            intervalTime = rateTime / rate;
+        } else {
+            intervalTime = minInterval;
+        }
+
+        timer = setTimeout( tick, intervalTime );
 
     };
 
     function renderCounter() {
 
         for(var i = 0, l = data.length; i < l; i++ ) {
-            $numbers[i].html( data[i] );
+            if( data[i] != oldData[i] )
+                renderNumber( i );
         }
+
+    };
+
+    function renderNumber( i ) {
+
+                $numbers[i].html( data[i] );
+
+    };
+
+    function tick() {
+        
+        var newNumber = intNumber + intervalAmount;
+        updateCounter( newNumber );
+        timer = setTimeout( tick, intervalTime );
 
     };
 
