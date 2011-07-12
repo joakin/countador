@@ -5,7 +5,7 @@ var Countador = (function(){
         selector: undefined, 
         digits: undefined,
         url: undefined,
-        pollInterval: 30000
+        pollInterval: 5000
     };
 
     var $box = undefined;
@@ -37,6 +37,11 @@ var Countador = (function(){
             return false;
         }
 
+        if( options.url === undefined || options.url === '' ) {
+            log( 'Countador needs a url to poll data from' );
+            return false;
+        }
+
         //Set loading
         $box.html( 'Loading ...' );
 
@@ -63,11 +68,38 @@ var Countador = (function(){
 
     function pollData( callback ) {
 
-        // TODO: Perform ajax request
-        //$.ajax();
-        callback( 123456, 5 );
-        //On error show in the box and log
-        
+        // Local filesystem test
+        callback( 53267, 600 );
+
+        /*
+        $.ajax({
+            url: options.url,
+            dataType: 'json',
+            data: {},
+            success: function( data ) {
+                if( data === undefined ||
+                    data['number'] !== undefined ||
+                    isNaN( parseInt( data['number'] ) ) ||
+                    data['rate'] !== undefined || 
+                    isNaN( parseInt( data['rate'] ) ) ) {
+
+                    pollError( 'Problem with the data received' );
+                }
+
+                callback( parseInt( data.number ), data.rate );
+            },
+            error: function( jqXHR, textStatus, errorThrown ) {
+                pollError( jqXHR, textStatus, errorThrown );
+            }
+        });
+        // */
+    };
+
+    function pollError( message ) {
+
+        $box.html( 'Error loading data' );
+        log( 'Countador', message );
+
     };
 
     function updateCounter( number, rate ) {
