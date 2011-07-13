@@ -5,7 +5,8 @@ var Countador = (function(){
         selector: undefined, 
         digits: undefined,
         url: undefined,
-        pollInterval: 5000
+        pollInterval: 30000,
+        endNumber: 0
     };
 
     var $box = undefined;
@@ -21,6 +22,11 @@ var Countador = (function(){
     var oldData = '';
     var data = '';
     var $numbers = [];
+    var endNumber = undefined;
+
+    var fixTimer = undefined;
+
+    var FINISHED = false;
 
     function init( props ){
 
@@ -48,52 +54,56 @@ var Countador = (function(){
             return false;
         }
 
+        if( options.endNumber === undefined || isNaN( parseInt( options.endNumber ) ) ) {
+            log( 'Countador needs a limit number to stop' );
+            return false;
+        } else {
+            endNumber = parseInt(options.endNumber);
+        }
+
         //Set loading
         $box.html( 'Loading ...' );
 
+        //Create counter
+        var boxes ='';
+        for( var i=0; i < options.digits; i++ ) {
+            boxes += '<div id="cd'+ i +'"></div>';
+        }
+
+        //Unset loading and init counter
+        $box.html( boxes );
+
+        $numbers = Array.prototype.slice.call( $box.find( 'div' ) );
+        for(var i = 0; i < options.digits; i++) {
+            $numbers[i] = $( $numbers[i] );
+        }
+
         //Do the polling
-        pollData( function( number, rate ) {
+        correctData();
 
-            //Create counter
-            var boxes ='';
-            for(var i=0; i < options.digits; i++ ) {
-                boxes += '<div id="cd'+ i +'"></div>';
-            }
-
-            //Unset loading and init counter
-            $box.html(boxes);
-
-            $numbers = Array.prototype.slice.call( $box.find('div') );
-            for(var i = 0; i < options.digits; i++) {
-                $numbers[i] = $( $numbers[i] );
-            }
-
-            updateCounter( number );
-            updateRate( rate );
-        });
     };
 
     function pollData( callback ) {
 
         // Local filesystem test
-        callback( 953267, 10000 );
+        //callback( 953267, 10000 );
 
-        /*
+        //*
         $.ajax({
             url: options.url,
             dataType: 'json',
             data: {},
             success: function( data ) {
                 if( data === undefined ||
-                    data['number'] !== undefined ||
+                    data['number'] === undefined ||
                     isNaN( parseInt( data['number'] ) ) ||
-                    data['rate'] !== undefined || 
+                    data['rate'] === undefined || 
                     isNaN( parseInt( data['rate'] ) ) ) {
 
                     pollError( 'Problem with the data received' );
                 }
 
-                callback( parseInt( data.number ), data.rate );
+                callback( parseInt( data.number ), parseInt(data.rate) );
             },
             error: function( jqXHR, textStatus, errorThrown ) {
                 pollError( jqXHR, textStatus, errorThrown );
@@ -111,7 +121,10 @@ var Countador = (function(){
 
     function updateCounter( number ) {
 
-        intNumber = number;
+        if( FINISHED )
+            return;
+
+        intNumber = checkFinish( intervalAmount, number );
         oldData = data;
         data = Math.floor(intNumber) + '';
         
@@ -131,9 +144,14 @@ var Countador = (function(){
 
         renderCounter();
 
+        if( FINISHED )
+            theEnd();
     };
 
     function updateRate( rate ) {
+
+        if( FINISHED )
+            return;
 
         // Adapt the rate
         // Delete interval and create a new one
@@ -153,14 +171,15 @@ var Countador = (function(){
             intervalTime = minInterval;
         }
 
-        timer = setTimeout( tick, intervalTime );
+        if( !FINISHED )
+            tick();
 
     };
 
     function renderCounter() {
 
         for(var i = 0, l = data.length; i < l; i++ ) {
-            if( data[i] != oldData[i] )
+            if( data.charAt(i) != oldData.charAt(i) )
                 renderNumber( i );
         }
 
@@ -170,7 +189,7 @@ var Countador = (function(){
 
         var $clone = $numbers[i].clone();
         $clone.addClass('dissapearingNumber');
-        $numbers[i].html( data[i] );
+        $numbers[i].html( data.charAt(i) );
         $numbers[i].append($clone);
         $clone.fadeOut( Math.min(intervalTime / 2, 500) , function(){
             $(this).remove();
@@ -182,8 +201,48 @@ var Countador = (function(){
         
         var newNumber = intNumber + intervalAmount;
         updateCounter( newNumber );
-        timer = setTimeout( tick, intervalTime );
 
+        if( !FINISHED )
+            timer = setTimeout( tick, intervalTime );
+
+    };
+
+    function correctData(){
+
+        pollData( function( number, rate ) {
+
+            updateCounter( number );
+            updateRate( rate );
+
+            // Delete interval and create a new one
+            if( fixTimer !== undefined )
+                clearTimeout( fixTimer );
+
+            if( !FINISHED )
+                fixTimer = setTimeout( correctData, options.pollInterval );
+
+        } );
+
+    };
+
+    function checkFinish( rate, number ) {
+
+        if( ( rate < 0 && number <= endNumber ) || 
+            ( rate > 0 && number >= endNumber ) ) {
+
+            FINISHED = true;
+            number = endNumber;
+            clearTimeout( fixTimer );
+            clearTimeout( timer );
+            return number;
+        }
+
+        return number;
+
+    };
+
+    function theEnd(){
+        $('body').append('<br><br><br><br><h1>FINISHED COUTING!</h1>');
     };
 
     return {
