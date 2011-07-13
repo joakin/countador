@@ -9,7 +9,7 @@ echo 'Creating '$DEPLOYPATH
 mkdir $DEPLOYPATH
 
 echo 'Copying data'
-cp -r css fakedata.json index.html js $DEPLOYPATH
+cp -rv css fakedata.json index.html js $DEPLOYPATH
 
 echo '+DONE'
 
