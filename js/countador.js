@@ -168,7 +168,9 @@ var Countador = (function(){
 
         intervalAmount = rate / numIntervals;
 
-        if( intervalAmount < 1 ) {
+        if( intervalAmount === 0 ) {
+            return;
+        } else if( intervalAmount < 1 ) {
             intervalAmount = 1;
             intervalTime = rateTime / rate;
         } else {
