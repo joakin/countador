@@ -195,9 +195,14 @@ var Countador = (function(){
         $clone.addClass('dissapearingNumber');
         $numbers[i].html( data.charAt(i) );
         $numbers[i].append($clone);
-        $clone.fadeOut( Math.min(intervalTime / 2, 500) , function(){
-            $(this).remove();
-        });
+        $clone.animate({
+                opacity: 'toggle',
+                height: 'toggle'
+            }, Math.min(intervalTime / 2, 500) ,
+            function(){
+                $(this).remove();
+            }
+        );
 
     };
 
