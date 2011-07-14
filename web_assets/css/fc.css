@@ -1,0 +1,94 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Serif:400,700&v2);
+
+body{
+    background-color: #f6f6f6;
+}
+
+body, select, input, textarea, button {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size:16px;
+}
+
+#container{
+    width:1024px;
+    margin:10px auto;
+}
+
+h1 { 
+    font-size: 500%;
+    text-align: center;
+    padding: 50px 0 40px 0;
+}
+
+h1 a{
+    color: #3D3D3D;
+    text-shadow: 0px 1px 1px #FCFCFC, 0px 14px 40px rgba(0, 0, 0, 0.2);
+    text-decoration:none;
+}
+h1 a:hover{
+    text-shadow: 0px 1px 1px #FfFfFf, 0px 14px 40px rgba(0, 0, 0, 0.3);
+    color:#444;
+}
+
+#main p {
+    margin:0 6%;
+}
+
+#main pre {
+    margin: 10px 8%;
+}
+
+#container{ padding:10px 20px 20px; }
+
+#container {
+    position: relative;
+    border: 1px solid #efefef;
+    background: #fff;
+    -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.02) inset;
+    -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.02) inset; 
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.02) inset;
+}
+
+#container:before,
+#container:after {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 70%;
+    max-width: 200px; /* avoid rotation causing ugly appearance at large container widths */
+    max-height: 100px; /* avoid rotation causing ugly appearance at large container widths */
+    height: 55%;
+    -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    -webkit-transform: skew(-15deg) rotate(-6deg);
+    -moz-transform: skew(-15deg) rotate(-6deg);
+    -ms-transform: skew(-15deg) rotate(-6deg);
+    -o-transform: skew(-15deg) rotate(-6deg);
+    transform: skew(-15deg) rotate(-6deg);
+}
+
+#container:after {
+    left: auto;
+    right: 10px;
+    -webkit-transform: skew(15deg) rotate(6deg);
+    -moz-transform: skew(15deg) rotate(6deg);
+    -ms-transform: skew(15deg) rotate(6deg);
+    -o-transform: skew(15deg) rotate(6deg);
+    transform: skew(15deg) rotate(6deg);
+}
+
+h1,h2,h3,h4,h5,h6 { text-shadow: 1px 2px 2px #DDD; }
+
+.counterbox {
+    text-align:center;
+    margin-bottom:40px;
+}
+
+#counter {
+    font-size:64px;
+}
+
+footer { text-align:center; }
