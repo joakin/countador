@@ -33,7 +33,10 @@
                 selector: '#counter',
                 digits: 7,
                 url: 'fakedata.json',
-                endNumber: 1000000
+                endNumber: 1000000,
+                onEnd: function() {
+                    $('body').append('<br><br><br><br><h1>FINISHED COUTING!</h1>');
+                }
             });
         });
     </script>

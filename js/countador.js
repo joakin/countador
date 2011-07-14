@@ -6,7 +6,8 @@ var Countador = (function(){
         digits: undefined,
         url: undefined,
         pollInterval: 30000,
-        endNumber: 0
+        endNumber: 0,
+        onEnd: function(){}
     };
 
     var $box = undefined;
@@ -27,6 +28,7 @@ var Countador = (function(){
     var fixTimer = undefined;
 
     var FINISHED = false;
+    var onEnd = undefined;
 
     function init( props ){
 
@@ -60,6 +62,8 @@ var Countador = (function(){
         } else {
             endNumber = parseInt(options.endNumber);
         }
+
+        onEnd = options.onEnd;
 
         //Set loading
         $box.html( 'Loading ...' );
@@ -242,7 +246,7 @@ var Countador = (function(){
     };
 
     function theEnd(){
-        $('body').append('<br><br><br><br><h1>FINISHED COUTING!</h1>');
+        onEnd();
     };
 
     return {
