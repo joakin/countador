@@ -62,7 +62,17 @@
 }
 
 #counter div.dissapearingNumber.goAway {
-    opacity: 0.3;
+     -moz-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* FF3.5+ */
+       -o-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* Opera 10.5 */
+  -webkit-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* Saf3.1+, Chrome */
+      -ms-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* IE9 */
+          transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  
+     -moz-transform-origin: right -1px;
+       -o-transform-origin: right -1px;
+  -webkit-transform-origin: right -1px;
+      -ms-transform-origin: right -1px;
+          transform-origin: right -1px;
+    opacity:0.2;
 }
 
 #counter>div:first-child ,
