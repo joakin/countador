@@ -202,31 +202,37 @@ var Countador = (function(){
 
     function renderNumber( i ) {
 
-        var $clone = $numbers[i].clone();
-        $numbers[i].html( data.charAt(i) );
-        $clone.appendTo($numbers[i]);
-        $clone.addClass('dissapearingNumber');
-        
-        if( !TRANSITIONS ) {
+        if( oldData !== '' ) {
+            var $clone = $numbers[i].clone();
 
-            $clone.animate({
-                    opacity: 'toggle',
-                    height: 'toggle'
-                }, Math.min(intervalTime / 2, 500) ,
-                function(){
+            $numbers[i].html( data.charAt(i) );
+
+            $clone.appendTo($numbers[i]);
+            $clone.addClass('dissapearingNumber');
+            
+            if( !TRANSITIONS ) {
+
+                $clone.animate({
+                        opacity: 'toggle',
+                        height: 'toggle'
+                    }, 300 ,
+                    function(){
+                        $(this).remove();
+                    }
+                );
+
+            } else {
+
+                $clone.bind( 'transitionend oTransitionEnd webkitTransitionEnd', function(event) {
                     $(this).remove();
-                }
-            );
+                } );
+                setTimeout( function() {
+                    $clone.addClass( 'goAway' );
+                }, 0 );
 
+            }
         } else {
-
-            $clone.bind( 'transitionend oTransitionEnd webkitTransitionEnd', function(event) {
-                $(this).remove();
-            } );
-            setTimeout( function() {
-                $clone.addClass( 'goAway' );
-            }, 0 );
-
+            $numbers[i].html( data.charAt(i) );
         }
 
     };
