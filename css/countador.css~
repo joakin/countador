@@ -53,6 +53,26 @@
     position:absolute;
     z-index:101;
     top:-1px;left:-1px;
+    overflow:hidden;
+     -moz-transition: all 0.3s ease-in;  /* FF4+ */
+       -o-transition: all 0.3s ease-in;  /* Opera 10.5+ */
+  -webkit-transition: all 0.3s ease-in;  /* Saf3.2+, Chrome */
+      -ms-transition: all 0.3s ease-in;  /* IE10? */
+          transition: all 0.3s ease-in;  
+}
+
+#counter div.dissapearingNumber.goAway {
+     -moz-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* FF3.5+ */
+       -o-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* Opera 10.5 */
+  -webkit-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* Saf3.1+, Chrome */
+      -ms-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* IE9 */
+          transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  
+     -moz-transform-origin: right -1px;
+       -o-transform-origin: right -1px;
+  -webkit-transform-origin: right -1px;
+      -ms-transform-origin: right -1px;
+          transform-origin: right -1px;
+    opacity:0.3;
 }
 
 #counter>div:first-child ,
