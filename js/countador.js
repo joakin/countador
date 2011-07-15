@@ -30,6 +30,8 @@ var Countador = (function(){
     var FINISHED = false;
     var onEnd = undefined;
 
+    var TRANSITIONS = false;
+
     function init( props ){
 
         $.extend( options, props );
@@ -61,6 +63,13 @@ var Countador = (function(){
             return false;
         } else {
             endNumber = parseInt(options.endNumber);
+        }
+
+        if( Modernizr ) {
+            if( Modernizr.csstransitions === true )
+                TRANSITIONS = true;
+        } else {
+            log( 'Countador needs Modernizr csstransitions detection' );
         }
 
         onEnd = options.onEnd;
@@ -194,17 +203,31 @@ var Countador = (function(){
     function renderNumber( i ) {
 
         var $clone = $numbers[i].clone();
-        $clone.addClass('dissapearingNumber');
         $numbers[i].html( data.charAt(i) );
-        $numbers[i].append($clone);
-        $clone.animate({
-                opacity: 'toggle',
-                height: 'toggle'
-            }, Math.min(intervalTime / 2, 500) ,
-            function(){
+        $clone.appendTo($numbers[i]);
+        $clone.addClass('dissapearingNumber');
+        
+        if( !TRANSITIONS ) {
+
+            $clone.animate({
+                    opacity: 'toggle',
+                    height: 'toggle'
+                }, Math.min(intervalTime / 2, 500) ,
+                function(){
+                    $(this).remove();
+                }
+            );
+
+        } else {
+
+            $clone.bind( 'transitionend oTransitionEnd webkitTransitionEnd', function(event) {
                 $(this).remove();
-            }
-        );
+            } );
+            setTimeout( function() {
+                $clone.addClass( 'goAway' );
+            }, 0 );
+
+        }
 
     };
 
