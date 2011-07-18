@@ -31,6 +31,9 @@ var Countador = (function(){
     var onEnd = undefined;
 
     var TRANSITIONS = false;
+    var TRANSFORMS = false;
+    var TRANSFORMS3D = false;
+    var ANIMATECLASS = 'goAway';
 
     function init( props ){
 
@@ -66,8 +69,15 @@ var Countador = (function(){
         }
 
         if( Modernizr ) {
-            if( Modernizr.csstransitions === true )
+            if( Modernizr.csstransitions === true ) {
                 TRANSITIONS = true;
+                if( Modernizr.csstransforms )
+                    TRANSFORMS = true;
+                if( Modernizr.csstransforms3d ) {
+                    ANIMATECLASS = 'goAway3D';
+                    TRANSFORMS3D = true;
+                }
+            }
         } else {
             log( 'Countador needs Modernizr csstransitions detection' );
         }
@@ -208,9 +218,8 @@ var Countador = (function(){
             $numbers[i].html( data.charAt(i) );
 
             $clone.appendTo($numbers[i]);
-            $clone.addClass('dissapearingNumber');
             
-            if( !TRANSITIONS ) {
+            if( !TRANSITIONS && !TRANSFORMS ) {
 
                 $clone.animate({
                         opacity: 'toggle',
@@ -227,7 +236,7 @@ var Countador = (function(){
                     $(this).remove();
                 } );
                 setTimeout( function() {
-                    $clone.addClass( 'goAway' );
+                    $clone.addClass( ANIMATECLASS );
                 }, 0 );
 
             }
