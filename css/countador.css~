@@ -49,7 +49,7 @@
     
 }
 
-#counter div.dissapearingNumber {
+#counter div div {
     position:absolute;
     z-index:101;
     top:-1px;left:-1px;
@@ -61,8 +61,7 @@
           transition: all 0.3s ease-in;  
 }
 
-#counter div.dissapearingNumber.goAway {
-    /* */
+#counter div div {
      -moz-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
        -o-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
   -webkit-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
@@ -74,9 +73,9 @@
       -ms-transform-origin: right -1px;
           transform-origin: right -1px;
     opacity:0.2;
-    /* */
+}
 
-    /* 
+#counter div.dissapearingNumber.goAway3D {
      -moz-transform: rotateX(160deg);
        -o-transform: rotateX(160deg);
   -webkit-transform: rotateX(160deg);
@@ -88,7 +87,6 @@
       -ms-transform-origin: 0 0;
           transform-origin: 0 0;
     opacity:0.1;
-    /* */
 }
 
 #counter>div:first-child ,
