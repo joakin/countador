@@ -24,7 +24,7 @@
     
 }
 
-.ie6 {
+.ie6 #counter {
     display:inline;
 }
 
@@ -62,10 +62,11 @@
 }
 
 #counter div.dissapearingNumber.goAway {
-     -moz-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* FF3.5+ */
-       -o-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* Opera 10.5 */
-  -webkit-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* Saf3.1+, Chrome */
-      -ms-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  /* IE9 */
+    /* 
+     -moz-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
+       -o-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
+  -webkit-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
+      -ms-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
           transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);  
      -moz-transform-origin: right -1px;
        -o-transform-origin: right -1px;
@@ -73,6 +74,21 @@
       -ms-transform-origin: right -1px;
           transform-origin: right -1px;
     opacity:0.2;
+    /* */
+
+    /* */
+     -moz-transform: rotateX(160deg);
+       -o-transform: rotateX(160deg);
+  -webkit-transform: rotateX(160deg);
+      -ms-transform: rotateX(160deg);
+          transform: rotateX(160deg);  
+     -moz-transform-origin: 0 0;
+       -o-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
+          transform-origin: 0 0;
+    opacity:0.1;
+    /* */
 }
 
 #counter>div:first-child ,
