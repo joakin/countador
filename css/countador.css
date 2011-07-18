@@ -76,11 +76,11 @@
 }
 
 #counter div .goAway3D {
-     -moz-transform: rotateX(160deg);
-       -o-transform: rotateX(160deg);
-  -webkit-transform: rotateX(160deg);
-      -ms-transform: rotateX(160deg);
-          transform: rotateX(160deg);  
+     -moz-transform: rotateX(160deg) translate3d(0,0,0);
+       -o-transform: rotateX(160deg) translate3d(0,0,0);
+  -webkit-transform: rotateX(160deg) translate3d(0,0,0);
+      -ms-transform: rotateX(160deg) translate3d(0,0,0);
+          transform: rotateX(160deg) translate3d(0,0,0);
      -moz-transform-origin: 0 0;
        -o-transform-origin: 0 0;
   -webkit-transform-origin: 0 0;

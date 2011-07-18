@@ -61,7 +61,7 @@
           transition: all 0.3s ease-in;  
 }
 
-#counter div div {
+#counter div .goAway {
      -moz-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
        -o-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
   -webkit-transform: skewx(-25deg) scaley(0.1) translate(-8px, -8px);
@@ -75,7 +75,7 @@
     opacity:0.2;
 }
 
-#counter div.dissapearingNumber.goAway3D {
+#counter div .goAway3D {
      -moz-transform: rotateX(160deg);
        -o-transform: rotateX(160deg);
   -webkit-transform: rotateX(160deg);
