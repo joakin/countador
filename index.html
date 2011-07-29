@@ -55,18 +55,39 @@
     });
             </code></pre>
             <p>
-                Explain behaviour
+                The selector is where the counter will be inserted, and the digits is the number of 
+                'boxes' that the counter will have.
             </p>
             <p>
-                Explain parameters
+                It goes until the <code>endNumber</code> and then executes the <code>onEnd</code> callback.
             </p>
             <p>
-                json response format
+                Each <code>pollInterval</code> milliseconds it does an ajax call to the server 
+                to get a file with the real number and the corrected growth rate.
+                <br>
+                The format of the file is:
+            </p>
+            <pre><code>
+    {
+        "number": "999482",
+        "rate": "4000"
+    }
+            </code></pre>
+            <p>
+                Where number is the actual number of the count in the server, and rate 
+                is the amount to increase/decrease per <strong>hour</strong>.
+                <br>
+                ( Yes, it can be negative, like "-4000" )
+            </p>
+            <h4>Dependencies</h4>
+            <p>
+                For this to work we need jQuery and Modernizr with csstransforms, csstransforms3d and
+                csstransitions.
             </p>
 		</div>
 
 		<footer>
-            <p class='text-small'>Countador is written by <a href='https://github.com/Joakin'>Joaquin</a>.</p>
+            <p class='text-small'>Countador is written by <a href='https://github.com/joakin'>Joaquin</a>.</p>
 		</footer>
 	</div>
 
